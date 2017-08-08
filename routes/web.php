@@ -19,3 +19,8 @@ Route::get('/extract', 'PlaceController@extract'); //go to extract view
 Route::post('/place', 'GuzzleController@getRemoteData'); //get place Id using name
 Route::post('/process', 'GuzzleController@processPlaceId');  //get results using place Id
 Route::get('/store/{item}', 'ResultController@store');
+
+//export
+Route::get('/viewExport', 'PlaceController@exportExcel');
+Route::post('/export', 'PlaceController@export');
+Route::post('/export_xlsx', 'PlaceController@export_xlsx');

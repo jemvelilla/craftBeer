@@ -47,6 +47,7 @@ class CreatePlacesTable extends Migration
         	$table->text('specials_eng');
         	$table->text('specials_ja');
         	$table->string('place_id')->nullable();
+        	$table->boolean('is_checked')->default(0);
         	$table->timestamps();
         });
     }

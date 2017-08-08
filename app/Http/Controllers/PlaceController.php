@@ -6,11 +6,47 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Excel;
 use App\Place;
+use App\Result;
 
 class PlaceController extends Controller
 {
 	public function extract(){
 		return view('imports.success');
+	}
+	
+	public function export_xlsx(){
+				
+		Excel::create('CRAFTBEER', function($excel){
+				
+			$excel->sheet('CRAFTBEER', function($sheet){
+	
+				$sheet->loadView('exports.index');
+	
+			});
+	
+	
+	
+		})->export('xlsx');
+		
+	}
+	
+	public function exportExcel(){
+	
+		return view('exports.formExport');
+	
+	}
+	
+	public function export(){
+	
+		Excel::create('CRAFTBEER', function($excel){
+				
+			$excel->sheet('CRAFTBEER', function($sheet){
+	
+				$sheet->loadView('exports.index');
+	
+			});
+								
+		})->export('csv');
 	}
 	
 	public function index(){
@@ -117,8 +153,7 @@ class PlaceController extends Controller
 			$maps->save();
 				
 		}
-		
-		session(['key' => request('key1')]);
+	
 		return redirect('/extract');
 	}
 }

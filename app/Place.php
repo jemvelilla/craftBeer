@@ -2,42 +2,30 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
 class Place extends Model
 {
-     protected $fillable = [
-    		'id',
-    		'bar_name',
-    		'bar_name_ja',
-    		 'type', 
-    		 'area', 
-    		 'subarea_eng', 
-    		 'subarea_ja', 
-    		 'address_eng', 
-    		 'address_ja', 
-    		 'hours_eng', 
-    		 'hours_ja', 
-    		 'highlights_eng', 
-    		 'highlights_ja', 
-    		 'phone', 
-    		 'website', 
-    		 'smokefree', 
-    		 'number_taps', 
-    		 'number_bottles', 
-    		 'closest_station_eng', 
-    		 'closest_station_ja', 
-    		 'map_latitude', 
-    		 'map_longitude', 
-    		 'jbt_permalink', 
-    		 'twitter_id', 
-    		 'image1', 
-    		 'image2', 
-    		 'image3', 
-    		 'image4', 
-    		 'desc_eng', 
-    		 'desc_ja', 
-    		 'specials_eng', 
-    		 'specials_ja', 
-    ];
+     protected $guarded = [];
+     
+     public static function getNames(){
+     	return static::whereNull('place_id')->where('is_checked', 0)->get();
+     }
+     
+     public static function getPlaceIds(){
+     	return static::whereNotNull('place_id')->where('is_checked', 1)->get();
+     }
+     
+     public static function setPlaceId($data){
+     	foreach ($data->results as $result){
+     		if(! $data->status == "OK"){
+     			return static::where('bar_name', 'like', '%'.$result->name.'%')
+     			->orWhere('bar_name_ja', $result->name)
+     			->update(['place_id' => null, 'is_checked' => 1]);
+     		}
+     	
+     		return static::where('bar_name', 'like', '%'.$result->name.'%')
+     		->orWhere('bar_name_ja', $result->name)
+     		->update(['place_id' => $result->place_id, 'is_checked' => 1]);
+     		 
+     	} 
+     }
 }

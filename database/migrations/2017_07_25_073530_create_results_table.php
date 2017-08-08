@@ -18,7 +18,7 @@ class CreateResultsTable extends Migration
             $table->string('formatted_address')->nullable();
 //             $table->string('formatted_phone_number', 20);
             $table->string('icon')->nullable();
-            $table->string('id')->nullable();
+            $table->string('result_id')->nullable();
             $table->string('international_phone_number', 20)->nullable();
             $table->string('name')->nullable();
             $table->string('place_id')->nullable();
